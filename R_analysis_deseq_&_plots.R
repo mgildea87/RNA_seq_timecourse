@@ -33,7 +33,7 @@ plotma = function(a ,b){
   
 }  
 
-#Diff exp following RUVseqg documentation with DESEQ2
+#Diff exp following RUVseq documentation with DESEQ2
 library(RUVSeq)
 library(DESeq2)
 library(Rcpp)
