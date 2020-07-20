@@ -118,19 +118,5 @@ for (i in Sample_data$condition){
   }
 }
 
-deseq = function(a,b){
-  dds <- DESeqDataSetFromMatrix(countData = raw_cere_counts, colData = Sample_data, design = ~ condition)
-  dds <- dds[, dds$condition %in% c("Dint.1","WT.1") ]
-  dds$condition <- droplevels(dds$condition)
-  first = Sample_data$condition[min(which("Dint.1" == Sample_data$condition)[1], which("WT.1" == Sample_data$condition)[1])]
-  second = Sample_data$condition[max(which("Dint.1" == Sample_data$condition)[1], which("WT.1" == Sample_data$condition)[1])]
-  sfs <- estimateSizeFactorsForMatrix(raw_pombe_counts)
-  sfs <- sfs[c(which(Sample_data$condition == first),which(Sample_data$condition == second))]
-  sizeFactors(dds) = sfs
-  sizeFactors(dds)
-  dds <- estimateDispersions(dds)
-  dds <- nbinomWaldTest(dds)
-  res <- results(dds)
-  res <- res[order(res$padj),]
-  plotMA(res)
+
   
