@@ -55,14 +55,14 @@ row.names(Sample_data_mat) <- colnames(raw_cere_counts)
 Sample_data = as.data.frame(Sample_data_mat)
 colnames(Sample_data) <- "condition"
 
-#correct raw pombe counts
+#correct raw pombe counts 
 correct_index = c(12, 14, 15, 16, 17, 18, 19, 20, 21, 23, 25, 27 , 28, 30, 32, 34, 36, 37)
 for (i in correct_index){
   for (j in 1:nrow(raw_pombe_counts)){
     raw_pombe_counts[j,i] = raw_pombe_counts[j,i]/2
   }
 }
-#DESeq2
+#DESeq2 function, exports ma plots and other quality control plots to pdf
 deseq = function(a,b){
 dds <- DESeqDataSetFromMatrix(countData = raw_cere_counts, colData = Sample_data, design = ~ condition)
 dds <- dds[, dds$condition %in% c(a,b) ]
@@ -107,6 +107,7 @@ heatmap.2(mat, trace="none", col = rev(hmcol), margin=c(13, 13))
 plotPCA(rld)
 dev.off()
 }
+# run all condition comparison permutations
 for (i in Sample_data$condition){
   for (j in Sample_data$condition){
     if (i == j){
